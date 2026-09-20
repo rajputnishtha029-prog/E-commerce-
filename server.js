@@ -141,16 +141,20 @@ app.post('/api/payment/verify', (req, res) => {
     }
 });
 
-// Server Start (Code ke sabse aakhri mein)
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 
+
+// ... baaki saare routes (jaise /api/products) yahan honge ...
+
+// Frontend static files serve karne ke liye
 const path = require('path');
+app.use(express.static(__dirname));
 
-// Ek step bahar (root) waale files serve karne ke liye '..' use karein
-app.use(express.static(path.join(__dirname, '..')));
-
-// Root folder se index.html serve karein
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Server listener (sabse last mein)
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
