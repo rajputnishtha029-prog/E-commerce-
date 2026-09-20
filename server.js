@@ -147,10 +147,10 @@ app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 
 const path = require('path');
 
-// Static files (HTML, CSS, JS) ko serve karne ke liye
-app.use(express.static(__dirname));
+// Ek step bahar (root) waale files serve karne ke liye '..' use karein
+app.use(express.static(path.join(__dirname, '..')));
 
-// Main index.html page serve karne ke liye
+// Root folder se index.html serve karein
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
