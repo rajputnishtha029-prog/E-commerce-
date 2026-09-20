@@ -141,20 +141,17 @@ app.post('/api/payment/verify', (req, res) => {
     }
 });
 
-
-
-// ... baaki saare routes (jaise /api/products) yahan honge ...
-
-// Frontend static files serve karne ke liye
-const path = require('path');
-app.use(express.static(__dirname));
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
 // Server listener (sabse last mein)
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+});
+
+const path = require('path');
+
+// Static UI files serve karne ke liye
+app.use(express.static(path.join(__dirname)));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
