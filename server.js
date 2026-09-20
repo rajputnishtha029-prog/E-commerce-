@@ -144,3 +144,13 @@ app.post('/api/payment/verify', (req, res) => {
 // Server Start (Code ke sabse aakhri mein)
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+
+const path = require('path');
+
+// Static files (HTML, CSS, JS) ko serve karne ke liye
+app.use(express.static(__dirname));
+
+// Main index.html page serve karne ke liye
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
