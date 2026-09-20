@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Products</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 20px; max-width: 800px; margin: auto; }
+        .form-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        button:hover { background: #218838; }
+        .product-item { display: flex; justify-content: space-between; align-items: center; background: white; padding: 12px 20px; margin-bottom: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .delete-btn { background: #dc3545; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; width: auto; }
+    </style>
+</head>
+<body>
+
+    <div class="form-card">
+        <h2>Add New Product</h2>
+        <form id="productForm">
+            <input type="text" id="name" placeholder="Product Name" required>
+            <input type="number" id="price" placeholder="Price (in ₹)" required>
+            <input type="text" id="image" placeholder="Image URL" required>
+            <button type="submit">Save to Database</button>
+        </form>
+    </div>
+
+    <h2>Existing Products</h2>
+    <div id="admin-product-list"></div>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api/products';
+
+        // Load all products
+        async function loadAdminProducts() {
+            try {
+                const res = await fetch(API_URL);
+                const products = await res.json();
+                const listContainer = document.getElementById('admin-product-list');
+
+                if (products.length === 0) {
+                    listContainer.innerHTML = "<p>No products available in database.</p>";
+                    return;
+                }
+
+                listContainer.innerHTML = products.map(p => `
+                    <div class="product-item">
+                        <div>
+                            <strong>${p.name}</strong> - ₹${p.price}
+                        </div>
+                        <button class="delete-btn" onclick="deleteProduct('${p._id}')">Delete</button>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // Add Product
+        document.getElementById('productForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const productData = {
+                name: document.getElementById('name').value,
+                price: Number(document.getElementById('price').value),
+                image: document.getElementById('image').value
+            };
+
+            try {
+                const res = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(productData)
+                });
+
+                if (res.ok) {
+                    alert('🎉 Product saved successfully!');
+                    document.getElementById('productForm').reset();
+                    loadAdminProducts();
+                } else {
+                    alert('❌ Failed to save product!');
+                }
+            } catch (err) {
+                alert('❌ Server is not running! Start server using "node server.js"');
+            }
+        });
+
+        // Delete Product
+        async function deleteProduct(id) {
+            if (confirm("Are you sure you want to delete this product?")) {
+                await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+                loadAdminProducts();
+            }
+        }
+
+        loadAdminProducts();
+    </script>
+</body>
+</html>
