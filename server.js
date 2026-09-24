@@ -143,10 +143,10 @@ app.post('/api/payment/verify', (req, res) => {
 
 // 1. Static UI files serve karne ke liye
 const path = require('path');
-app.use(express.static(path.join(__dirname, '..')));
+app.use(express.static(path.resolve(__dirname, '..')));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '..', 'index.html'));
 });
 
 // 2. Server listener (SABSE AAKHRI MEIN YEH AAYEGA)
