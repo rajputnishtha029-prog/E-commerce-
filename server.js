@@ -141,12 +141,12 @@ app.post('/api/payment/verify', (req, res) => {
     }
 });
 
-// 1. Static UI files serve karne ke liye (PEHLE YEH AAYEGA)
+// 1. Static UI files serve karne ke liye
 const path = require('path');
-app.use(express.static(path.join(__dirname, '..')));
+app.use(express.static(__dirname));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // 2. Server listener (SABSE AAKHRI MEIN YEH AAYEGA)
@@ -154,3 +154,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
