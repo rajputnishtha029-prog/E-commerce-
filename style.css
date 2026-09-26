@@ -1,0 +1,850 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f8fafc;
+    color: #1e293b;
+    padding-bottom: 40px;
+}
+
+/* Navbar */
+.navbar {
+    background: #0f172a;
+    color: #fff;
+    padding: 16px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.logo small {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 400;
+    display: block;
+}
+
+.cart-nav-btn {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.cart-nav-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.cart-badge {
+    background: #ef4444;
+    color: #fff;
+    border-radius: 50%;
+    padding: 2px 7px;
+    font-size: 12px;
+}
+
+/* Hero Banner */
+.hero-banner {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+    color: #fff;
+    text-align: center;
+    padding: 40px 20px;
+    margin-bottom: 25px;
+}
+
+.hero-banner h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.hero-banner p {
+    color: #c7d2fe;
+    font-size: 14px;
+}
+
+/* Main Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Search & Filters */
+.controls-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+#search-input {
+    padding: 10px 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 25px;
+    width: 280px;
+    outline: none;
+    font-size: 14px;
+}
+
+.filter-pills {
+    display: flex;
+    gap: 8px;
+}
+
+.pill {
+    background: #e2e8f0;
+    border: none;
+    padding: 7px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    color: #475569;
+}
+
+.pill.active, .pill:hover {
+    background: #0f172a;
+    color: #fff;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #0f172a;
+}
+
+/* Product Grid */
+
+
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+}
+
+
+.product-card h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.price-tag {
+    font-size: 17px;
+    font-weight: 700;
+    color: #059669;
+    margin-bottom: 12px;
+}
+
+/* Quantity Control */
+.quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+}
+
+.qty-btn {
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    width: 26px;
+    height: 26px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.qty-number {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Card Action Buttons */
+.card-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.add-btn {
+    flex: 1;
+    background: #0f172a;
+    color: #fff;
+    border: none;
+    padding: 9px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.add-btn:hover {
+    background: #334155;
+}
+
+.buy-now-btn {
+    flex: 1;
+    background: #d97706; /* Golden Amber */
+    color: #fff;
+    border: none;
+    padding: 9px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.buy-now-btn:hover {
+    background: #b45309;
+}
+
+/* Modal Popup */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 440px;
+    padding: 20px;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 12px;
+    margin-bottom: 15px;
+}
+
+.close-modal-btn {
+    font-size: 24px;
+    cursor: pointer;
+    color: #64748b;
+}
+
+.cart-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    margin: 15px 0;
+}
+
+.checkout-btn {
+    width: 100%;
+    background: #16a34a;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    margin-bottom: 8px;
+}
+
+.secondary-btn {
+    width: 100%;
+    background: transparent;
+    border: 1px solid #cbd5e1;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 30px;
+    margin-top: 50px;
+    color: #64748b;
+    font-size: 13px;
+    border-top: 1px solid #e2e8f0;
+}
+
+/* Premium Glassmorphism Header & Controls */
+.hero-banner {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #312e81 100%);
+    padding: 60px 20px;
+    border-radius: 0 0 24px 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.hero-content h2 {
+    font-size: 2.2rem;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Category Filter Pills Enhancements */
+.pill {
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #475569;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 30px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.pill:hover {
+    border-color: #2563eb;
+    color: #2563eb;
+    transform: translateY(-2px);
+}
+
+.pill.active {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Product Card Luxury Feel */
+/* Layout Jumping & Blinking Fix */
+#product-list {
+  min-height: 500px; /* Minimum height fixed rakhta hai */
+}
+
+
+/* Product Grid Clean Layout Fix */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 22px;
+  min-height: unset !important; /* Extra bottom space remove karne ke liye */
+  height: auto !important;
+}
+
+.product-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 15px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+}
+
+.product-card img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  background-color: #f8fafc;
+}
+
+/* Skeleton loader rule override if lingering */
+.skeleton-card {
+  display: none !important;
+}
+
+.product-card:hover img {
+    transform: scale(1.03);
+}
+
+.product-card h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #0f172a;
+    margin: 12px 0 4px 0;
+}
+
+.price-tag {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #059669;
+}
+
+/* Rounded Stylish Action Buttons */
+.add-btn {
+    background: #f8fafc;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.add-btn:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+}
+
+.buy-now-btn {
+    background: linear-gradient(135deg, #d97706, #b45309);
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(217, 119, 6, 0.25);
+    transition: all 0.2s ease;
+}
+
+.buy-now-btn:hover {
+    background: linear-gradient(135deg, #b45309, #92400e);
+    box-shadow: 0 6px 14px rgba(217, 119, 6, 0.35);
+    transform: translateY(-1px);
+}
+
+/* Auth Modal Styling */
+.auth-content {
+    max-width: 380px;
+    padding: 30px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.auth-content h2 {
+    margin-bottom: 4px;
+    color: #0f172a;
+}
+
+.auth-sub {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.auth-content form input {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.auth-content form input:focus {
+    border-color: #2563eb;
+}
+
+.auth-submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 6px;
+}
+
+.auth-switch {
+    font-size: 13px;
+    margin-top: 16px;
+    color: #475569;
+}
+
+.auth-switch a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Navigation Actions Alignment */
+.nav-actions {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+/* Header Login Button Styling Fix */
+.auth-nav-btn {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    padding: 8px 18px !important;
+    border-radius: 20px !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: all 0.2s ease !important;
+}
+
+.auth-nav-btn:hover {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border-color: #ffffff !important;
+}
+
+/* Fix Category Pills Hover State */
+.pill {
+    background: #ffffff !important;
+    color: #475569 !important;
+    border: 1px solid #e2e8f0 !important;
+    padding: 8px 20px !important;
+    border-radius: 30px !important;
+    font-weight: 500 !important;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out !important;
+}
+
+/* Premium Hover: Subtle Blue Tint & Soft Shadow */
+.pill:hover {
+    background: #eff6ff !important;
+    color: #2563eb !important;
+    border-color: #bfdbfe !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1) !important;
+}
+
+/* Active Category Pill (Selected) */
+.pill.active {
+    background: #2563eb !important;
+    color: #ffffff !important;
+    border-color: #2563eb !important;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3) !important;
+}
+
+/* Premium My Orders Button Styling */
+.orders-btn {
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    padding: 8px 18px !important;
+    border-radius: 25px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    transition: all 0.3s ease !important;
+    backdrop-filter: blur(5px);
+}
+
+/* Hover Effect */
+.orders-btn:hover {
+    background: rgba(255, 255, 255, 0.25) !important;
+    border-color: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Product Detail Modal Layout */
+.product-modal-body {
+    max-width: 700px !important;
+    width: 90%;
+}
+
+.product-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 15px;
+    text-align: left;
+}
+
+.product-detail-img img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.product-detail-info h2 {
+    margin: 0 0 10px 0;
+    font-size: 22px;
+}
+
+.product-detail-info h3 {
+    color: #e2b13c;
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+.badge {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    display: inline-block;
+}
+
+.detail-actions {
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    .product-detail-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #ffffff;
+  width: 90%;
+  max-width: 650px;
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px; right: 15px;
+  font-size: 28px;
+  background: none; border: none;
+  cursor: pointer; color: #666;
+}
+
+.modal-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.modal-image-section img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.modal-category { color: #888; font-size: 0.9rem; margin-bottom: 8px; }
+.modal-price { font-size: 1.4rem; font-weight: bold; color: #2e7d32; margin-bottom: 12px; }
+.modal-material { font-size: 0.95rem; margin-bottom: 12px; }
+.modal-description { font-size: 0.9rem; color: #444; line-height: 1.4; margin-bottom: 20px; }
+
+@media (max-width: 600px) {
+  .modal-body { grid-template-columns: 1fr; }
+}
+
+/* Hero Carousel Fixed Styles */
+.hero-carousel {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.carousel-track {
+  display: flex;
+  width: 300%; /* 3 slides ke liye 300% width mandatory hai */
+  height: 100%;
+  transition: transform 0.6s ease-in-out;
+}
+
+.carousel-slide {
+  width: 33.333%; /* Har slide container exact 33.33% space lega */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #ffffff;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Background Gradients */
+.slide-1 {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+}
+.slide-2 {
+  background: linear-gradient(135deg, #831843 0%, #9d174d 50%, #be185d 100%);
+}
+.slide-3 {
+  background: linear-gradient(135deg, #064e3b 0%, #047857 50%, #10b981 100%);
+}
+
+.hero-content h2 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: #ffffff; /* Text visible rakhne ke liye white */
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.shop-now-btn {
+  padding: 10px 24px;
+  background: #ffffff;
+  color: #1e1b4b;
+  border: none;
+  border-radius: 25px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.shop-now-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Dots Indicator */
+.carousel-dots {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  z-index: 10;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dot.active {
+  background: #ffffff;
+  width: 24px;
+  border-radius: 10px;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Exact Reference Style Quantity Selector */
+.quantity-selector-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 10px 0 14px 0;
+}
+
+.quantity-btn {
+  width: 32px;
+  height: 32px;
+  background-color: #b3b3b3; /* Gray button background */
+  border: none;
+  border-radius: 4px;
+  color: #111111;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.quantity-btn:hover {
+  background-color: #999999;
+}
+
+.quantity-number {
+  font-size: 16px;
+  font-weight: bold;
+  color: #111111;
+  min-width: 20px;
+  text-align: center;
+}

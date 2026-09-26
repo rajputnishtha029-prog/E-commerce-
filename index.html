@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aapka E-Commerce Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="logo">
+            <span class="logo-icon">✨</span> MyStore <small>Jewelry Collection</small>
+        </div>
+        <div class="nav-actions">
+    <span id="user-welcome" style="display: none; margin-right: 12px; font-weight: 600;"></span>
+    <button id="user-btn" class="pill auth-nav-btn" onclick="openAuthModal()">Login</button>
+    <button onclick="openOrdersModal()" class="orders-btn">📦 My Orders</button>
+    <button onclick="openWishlistModal()" class="orders-btn">❤️ Wishlist <span id="wishlist-count" class="cart-badge">0</span></button>
+    <button class="cart-nav-btn" onclick="toggleCart()">🛒 Cart <span id="cart-count" class="cart-badge">0</span></button>
+</div>
+      
+   
+</div>
+    </header>
+
+    <!-- Hero Banner Carousel -->
+<section class="hero-carousel">
+  <div class="carousel-track" id="carouselTrack">
+    <!-- Slide 1 -->
+    <div class="carousel-slide slide-1">
+      <div class="hero-content">
+        <h2>Elegance in Every Detail</h2>
+        <p>Get 10% OFF on your First Order | Use Code: <strong>FIRST10</strong></p>
+        <button class="shop-now-btn" onclick="document.getElementById('product-list').scrollIntoView({behavior: 'smooth'})">Shop Collection</button>
+      </div>
+    </div>
+    <!-- Slide 2 -->
+    <div class="carousel-slide slide-2">
+      <div class="hero-content">
+        <h2>Festive Special Offers</h2>
+        <p>Up to 30% OFF on Gold & Silver Jewelry Collections</p>
+        <button class="shop-now-btn" onclick="document.getElementById('product-list').scrollIntoView({behavior: 'smooth'})">Explore Offers</button>
+      </div>
+    </div>
+    <!-- Slide 3 -->
+    <div class="carousel-slide slide-3">
+      <div class="hero-content">
+        <h2>New Handcrafted Arrival</h2>
+        <p>Discover Exclusive Designs Crafted Just For You</p>
+        <button class="shop-now-btn" onclick="document.getElementById('product-list').scrollIntoView({behavior: 'smooth'})">Browse New</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide Navigation Dots -->
+  <div class="carousel-dots">
+    <span class="dot active" onclick="goToSlide(0)"></span>
+    <span class="dot" onclick="goToSlide(1)"></span>
+    <span class="dot" onclick="goToSlide(2)"></span>
+  </div>
+</section>
+
+    <!-- Main Container -->
+    <main class="container">
+        
+        
+        <!-- Search & Filter Controls -->
+<div class="controls-bar" style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+    <!-- Search Bar -->
+    <input type="text" id="search-input" placeholder="🔍 Search jewelry..." onkeyup="filterProducts()">
+    
+    <!-- Price Filter Dropdown (NEW) -->
+    <select id="price-filter" onchange="filterProducts()" class="pill" style="padding: 8px 15px; background: #fff; border: 1px solid #ccc; cursor: pointer;">
+        <option value="all">All Prices</option>
+        <option value="under1000">Under ₹1,000</option>
+        <option value="1000-5000">₹1,000 - ₹5,000</option>
+        <option value="above5000">Above ₹5,000</option>
+    </select>
+
+    <!-- Category Pills -->
+    <div class="filter-pills">
+        <button class="pill active" onclick="filterCategory('all', event)">All</button>
+        <button class="pill" onclick="filterCategory('ring', event)">Rings</button>
+        <button class="pill" onclick="filterCategory('chain', event)">Chains/Necklace</button>
+        <button class="pill" onclick="filterCategory('bracelet', event)">Bracelets</button>
+        <button class="pill" onclick="filterCategory('earring', event)">Earrings</button>
+        <button class="pill" onclick="filterCategory('pendant', event)">Pendants</button>
+        <button class="pill" onclick="filterCategory('set', event)">Sets</button>
+    </div>
+</div>
+
+        <h2 class="section-title">Our Premium Collection</h2>
+        
+        <!-- Product Grid -->
+        <div id="product-list" class="product-grid"></div>
+  <div class="skeleton-card"></div>
+  <div class="skeleton-card"></div>
+  <div class="skeleton-card"></div>
+  <div class="skeleton-card"></div>
+</div>
+    </main>
+
+    <!-- Cart Modal Overlay -->
+    <div id="cart-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🛍️ Your Shopping Cart</h3>
+                <span class="close-modal-btn" onclick="toggleCart()">&times;</span>
+            </div>
+            <div id="cart-items" class="cart-body"></div>
+            <div class="modal-footer">
+                <div class="total-row">
+                    <span>Total Amount:</span>
+                    <strong class="total-price">₹<span id="cart-total">0</span></strong>
+                </div>
+                <div class="modal-actions">
+                   <button class="checkout-btn" onclick="openCheckoutModal()">Proceed to Checkout</button>
+                    <button class="secondary-btn" onclick="toggleCart()">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal (Login / Signup) -->
+<div id="auth-modal" class="modal hidden">
+    <div class="modal-content auth-content">
+        <span class="close-modal-btn" onclick="closeAuthModal()">&times;</span>
+        
+        <!-- Login Form -->
+        <div id="login-box">
+            <h2>Welcome Back</h2>
+            <p class="auth-sub">Sign in to your account</p>
+            <form onsubmit="handleLogin(event)">
+                <input type="email" id="login-email" placeholder="Email Address" required>
+                <input type="password" id="login-password" placeholder="Password" required>
+                <button type="submit" class="auth-submit-btn">Login</button>
+            </form>
+            <p class="auth-switch">Don't have an account? <a href="#" onclick="switchAuth('signup')">Sign Up</a></p>
+        </div>
+
+        <!-- Signup Form -->
+        <div id="signup-box" class="hidden">
+            <h2>Create Account</h2>
+            <p class="auth-sub">Join us for luxury shopping</p>
+            <form onsubmit="handleSignup(event)">
+                <input type="text" id="signup-name" placeholder="Full Name" required>
+                <input type="email" id="signup-email" placeholder="Email Address" required>
+                <input type="password" id="signup-password" placeholder="Password" required>
+                <button type="submit" class="auth-submit-btn">Create Account</button>
+            </form>
+            <p class="auth-switch">Already have an account? <a href="#" onclick="switchAuth('login')">Login</a></p>
+        </div>
+    </div>
+</div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 MyStore. All rights reserved. | Secured by <strong>Razorpay</strong></p>
+    </footer>
+
+    <!-- Checkout Modal Form -->
+<div id="checkout-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; z-index: 1000;">
+    <div style="background: #fff; padding: 25px; border-radius: 12px; width: 90%; max-width: 450px; position: relative;">
+        <span onclick="closeCheckoutModal()" style="position: absolute; right: 15px; top: 10px; cursor: pointer; font-size: 20px;">&times;</span>
+        <h2 style="margin-bottom: 15px; text-align: center;">Shipping Details</h2>
+        
+        <form id="checkout-form" onsubmit="handleCheckoutSubmit(event)">
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Full Name</label>
+                <input type="text" id="cust-name" required placeholder="Aapka Naam" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px;">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Phone Number</label>
+                <input type="tel" id="cust-phone" required placeholder="Mobile Number" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px;">
+            </div>
+            
+            <div style="margin-bottom: 12px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Delivery Address</label>
+                <textarea id="cust-address" required placeholder="House No, Street, City, Pincode" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px; height: 70px;"></textarea>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 500;">Payment Option</label>
+                <select id="payment-method" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 6px;">
+                    <option value="online">Online Payment (UPI/Card)</option>
+                    <option value="cod">Cash on Delivery (COD)</option>
+                </select>
+            </div>
+
+            <button type="submit" style="width: 100%; background: #10b981; color: white; padding: 10px; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold;">Continue to Place Order</button>
+        </form>
+    </div>
+</div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px;"></div>
+
+    <!-- My Orders Popup Modal -->
+<div id="orders-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+    <div style="background: #fff; width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto; padding: 20px; border-radius: 8px; position: relative;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;">
+            <h2 style="margin: 0; color: #1e293b;">My Orders</h2>
+            <button onclick="closeOrdersModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #64748b;">&times;</button>
+        </div>
+        <div id="orders-list">
+            <!-- Orders dynamic load honge -->
+        </div>
+    </div>
+</div>
+
+    <!-- Product Details Modal -->
+<div id="product-detail-modal" class="modal hidden" style="display: none;">
+    <div class="modal-content product-modal-body">
+        <span class="close-btn" onclick="closeProductModal()">&times;</span>
+        <div class="product-detail-grid">
+            <div class="product-detail-img">
+                <img id="detail-img" src="" alt="Product Image">
+            </div>
+            <div class="product-detail-info">
+                <h2 id="detail-title">Product Name</h2>
+                <p id="detail-category" class="badge">Category</p>
+                <h3 id="detail-price">₹0</h3>
+                <p id="detail-desc">Product description goes here...</p>
+                <div class="detail-actions">
+                    <button id="detail-add-cart-btn" class="pill-btn primary">🛒 Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Wishlist Modal -->
+<div id="wishlist-modal" class="modal hidden" style="display: none;">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeWishlistModal()">&times;</span>
+        <h2>❤️ Your Wishlist</h2>
+        <div id="wishlist-items-container" style="margin-top: 15px;"></div>
+    </div>
+</div>
+
+<!-- Checkout Modal -->
+<div id="checkout-modal" class="modal hidden" style="display: none;">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeCheckoutModal()">&times;</span>
+        <h2>🚚 Delivery Address</h2>
+        <form id="checkout-form" onsubmit="handleCheckout(event)" style="display: flex; flex-direction: column; gap: 12px; margin-top: 15px;">
+            <input type="text" id="cust-name" placeholder="Full Name" required style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+            <input type="tel" id="cust-phone" placeholder="Phone Number" required style="padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+            <textarea id="cust-address" placeholder="Full Delivery Address" required style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; height: 80px;"></textarea>
+            <button type="submit" class="pill-btn primary" style="padding: 12px; cursor: pointer;">Place Order (Cash on Delivery)</button>
+        </form>
+    </div>
+</div>
+
+  <!-- My Orders Modal Overlay -->
+<div id="orders-modal" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 9999;">
+    <div class="modal-content" style="background: #ffffff; padding: 24px; border-radius: 12px; max-width: 520px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+        <span onclick="closeOrdersModal()" style="position: absolute; top: 12px; right: 18px; font-size: 28px; font-weight: bold; cursor: pointer; color: #333;">&times;</span>
+        <h2 style="margin-top: 0; margin-bottom: 16px; color: #1e293b;">📦 My Orders History</h2>
+        <div id="orders-list"></div>
+    </div>
+</div>
+
+    <!-- Product Detail Modal -->
+<div id="product-modal" class="modal-overlay" onclick="closeModalOnOutsideClick(event)">
+  <div class="modal-content">
+    <button class="close-btn" onclick="closeProductModal()">&times;</button>
+    <div class="modal-body">
+      <div class="modal-image-section">
+        <img id="modal-main-img" src="" alt="Product Image" />
+      </div>
+      <div class="modal-info-section">
+        <h2 id="modal-title"></h2>
+        <p class="modal-category" id="modal-category"></p>
+        <div class="modal-price" id="modal-price"></div>
+        <div class="modal-material">
+          <strong>Material:</strong> <span id="modal-material-type">Gold / Silver</span>
+        </div>
+        <p class="modal-description" id="modal-description"></p>
+        <div class="modal-actions" id="modal-actions-container">
+          <!-- Add to Cart / Buy Now buttons here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
