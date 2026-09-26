@@ -5,8 +5,11 @@
     font-family: 'Poppins', sans-serif;
 }
 
+/* ==========================================
+   COMPLETE FULLY RESPONSIVE BREAKPOINTS
+   ========================================== */
 
-/* Box sizing & overflow fix */
+/* Base container fixes for all screens */
 * {
     box-sizing: border-box;
 }
@@ -18,21 +21,84 @@ html, body {
     padding: 0;
 }
 
-/* Mobile responsive layout adjustment */
+/* 1. Category Bar: Laptop par normal, Mobile par Swipe/Scrollable */
+.categories-container, .category-buttons, .filter-buttons, div[class*="category"] {
+    display: flex !important;
+    gap: 8px !important;
+    padding: 10px 5px !important;
+    max-width: 100% !important;
+}
+
+/* 2. Mobile Specific Adjustments (Screens smaller than 768px) */
 @media (max-width: 768px) {
-    /* Navbar fix */
-    nav, .navbar, .header {
-        flex-direction: column;
-        width: 100%;
-        padding: 10px;
+    /* Category buttons ko horizontally scrollable banana */
+    .categories-container, .category-buttons, .filter-buttons, div[class*="category"] {
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        -webkit-overflow-scrolling: touch !important;
+        justify-content: flex-start !important;
     }
-    
-    /* Container/Card width fix */
-    .container, .banner, .hero, .product-grid {
+
+    /* Scrollbar ko clean/hide rakhne ke liye */
+    .categories-container::-webkit-scrollbar, 
+    .category-buttons::-webkit-scrollbar, 
+    .filter-buttons::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    /* Buttons ka size mobile ke liye auto-fit karna */
+    .categories-container button, 
+    .category-buttons button, 
+    .filter-buttons button,
+    button[class*="category"] {
+        flex: 0 0 auto !important;
+        padding: 8px 16px !important;
+        font-size: 13px !important;
+    }
+
+    /* Navbar / Header alignment for Mobile */
+    header, nav, .navbar, .header {
+        flex-direction: column !important;
+        width: 100% !important;
+        padding: 10px !important;
+        gap: 10px !important;
+    }
+
+    /* Hero Banner & Layout Containers */
+    .banner, .hero, .container, .main-content {
         width: 100% !important;
         max-width: 100% !important;
+        border-radius: 8px !important;
+    }
+
+    /* Product Cards: Mobile par 1 ya 2 column grid */
+    .product-grid, .products-container {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+        gap: 12px !important;
+        padding: 10px !important;
+    }
+
+    .product-card {
+        width: 100% !important;
     }
 }
+
+/* 3. Laptop/Desktop Screens (Screens larger than 769px) */
+@media (min-width: 769px) {
+    .categories-container, .category-buttons, .filter-buttons {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+    }
+
+    .product-grid, .products-container {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+        gap: 20px !important;
+    }
+}
+
 body {
     background-color: #f8fafc;
     color: #1e293b;
