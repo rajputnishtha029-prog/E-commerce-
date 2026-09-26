@@ -5,6 +5,34 @@
     font-family: 'Poppins', sans-serif;
 }
 
+
+/* Box sizing & overflow fix */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* Mobile responsive layout adjustment */
+@media (max-width: 768px) {
+    /* Navbar fix */
+    nav, .navbar, .header {
+        flex-direction: column;
+        width: 100%;
+        padding: 10px;
+    }
+    
+    /* Container/Card width fix */
+    .container, .banner, .hero, .product-grid {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
 body {
     background-color: #f8fafc;
     color: #1e293b;
