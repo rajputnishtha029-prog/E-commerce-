@@ -995,3 +995,44 @@ body {
         font-size: 12px !important;
     }
 }
+
+/* ==========================================
+   CATEGORY HORIZONTAL SCROLL & VISIBILITY FIX
+   ========================================== */
+
+/* Parent container layout force */
+div[class*="category"], 
+.categories-container, 
+.category-buttons, 
+.filter-buttons {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: scroll !important;
+    -webkit-overflow-scrolling: touch !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding: 10px 15px !important;
+    gap: 10px !important;
+    box-sizing: border-box !important;
+}
+
+/* Individual Category Buttons styling */
+div[class*="category"] button, 
+.categories-container button, 
+.category-buttons button, 
+.filter-buttons button,
+.category-btn {
+    flex: 0 0 auto !important; /* Button ko shrink hone se roko */
+    white-space: nowrap !important; /* Text ko single line mein rakho */
+    display: inline-block !important;
+    padding: 8px 16px !important;
+}
+
+/* Hide scrollbar visually while keeping touch-swipe functionality */
+div[class*="category"]::-webkit-scrollbar, 
+.categories-container::-webkit-scrollbar, 
+.category-buttons::-webkit-scrollbar, 
+.filter-buttons::-webkit-scrollbar {
+    display: none !important;
+    height: 0px !important;
+}
